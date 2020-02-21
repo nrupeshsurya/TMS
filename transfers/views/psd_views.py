@@ -12,11 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from transfers.decorators import psd_required
 
-<<<<<<< HEAD
 @method_decorator([login_required, psd_required], name='dispatch')
-=======
-@method_decorator([login_required, psd_required], name='dispatch') 
->>>>>>> Decorators added except utils.py ones. (Untested)
 class PSDview(generic.TemplateView):
     form_class = PSDForm
     initial = {'key': 'value'}
@@ -47,7 +43,6 @@ class PSDview(generic.TemplateView):
         }
         return render(request, self.template_name, self.context)
 
-<<<<<<< HEAD
 def get_form_data(request, *args, **kwargs):
     template_name = 'transfers/psd_dashboard.html'
     form = PSDForm(request.POST)
@@ -62,8 +57,6 @@ def get_form_data(request, *args, **kwargs):
     }
     return render(request, template_name, context)
 
-=======
->>>>>>> Decorators added except utils.py ones. (Untested)
 @login_required
 @psd_required
 def get_PSD_data(request, *args, **kwargs):
