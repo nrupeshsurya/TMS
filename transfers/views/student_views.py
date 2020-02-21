@@ -9,7 +9,11 @@ from transfers.forms import PS2TSTransferForm, TS2PSTransferForm
 
 from transfers.utils import get_application_status, notify_ps2ts, notify_ts2ps, get_deadline_status
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from transfers.decorators import student_required
 
+@method_decorator([login_required, student_required], name='dispatch')
 class StudentDashboardView(generic.TemplateView):
     template_name = 'transfers/student_dashboard.html'
     context = {}
@@ -36,7 +40,7 @@ class StudentDashboardView(generic.TemplateView):
         self.context['error'] = error
         return render(request, self.template_name, self.context)
 
-
+@method_decorator([login_required, student_required], name='dispatch')
 class PS2TSFormView(generic.FormView):
     form_class = PS2TSTransferForm
     initial = {'key': 'value'}
@@ -96,7 +100,7 @@ class PS2TSFormView(generic.FormView):
         }
         return render(request, self.template_name, self.context)
         
-
+@method_decorator([login_required, student_required], name='dispatch')
 class TS2PSFormView(generic.FormView):
     form_class = TS2PSTransferForm
     initial = {'key': 'value'}
