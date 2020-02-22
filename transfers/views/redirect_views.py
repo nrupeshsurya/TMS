@@ -27,7 +27,7 @@ def application_data_redirect_view(request):
         return redirect('/TMS/login/')
     else:
         if request.user.is_superuser:
-            return redirect('/TMS-admin/')
+            return redirect('/TMS/psd/dashboard')
         user_type = request.user.userprofile.user_type
         if user_type == UserType.HOD.value:
             return redirect('/TMS/hod/get-hod-data/')
