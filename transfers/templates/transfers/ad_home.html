@@ -82,16 +82,13 @@
              </table>
              <table>
               <tr v-if="showTS2PS==true" v-for="attr in modal_student_ts2ps_attr">
-                  <td class="text-left text-dark"><strong>${attr.display} </strong></td>
-                  <td class="text-dark">${modal_student[attr.props]}</td>
+                  <td class="text-left"><strong>${attr.display}</strong> </td>
+                  <td >${modal_student[attr.props]}</td>
                 </tr>
              </table>
-            </div>     
-            <div class="text-center d-flex justify-content-around align-items-center">
-                  <button @click="rejectRequest(modal_student)" class="btn btn-md  btn-danger text-light text-center mb-2">Reject Request</button>  
-            </div>         
+            </div>              
             <div class="modal-footer">
-                <button id="closeModal" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
           </div>
            
@@ -115,7 +112,7 @@
        {
         type_val:1,
         data_all:[],
-        modal_student:{},        
+        modal_student:{},
         modal_student_ps2ts_attr:[{'props':'applicant__user__username','display':'College ID'},
                             {'props':'applicant__user__last_name','display':'Last Name'},
                             {'props':'applicant__user__first_name','display':'First Name'},
