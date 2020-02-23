@@ -127,7 +127,6 @@ def get_deadline_status(form_type):
     except:
         update_psd = DeadlineModel.objects.create()
     status = False
-<<<<<<< HEAD
     if form_type == TransferType.PS2TS.value:
         if update_psd.is_active_PS2TS:
             if datetime.now() < update_psd.deadline_PS2TS:
@@ -136,12 +135,6 @@ def get_deadline_status(form_type):
             else:
                 update_psd.is_active_PS2TS = False
                 status = False
-=======
-    if(form_type == TransferType.PS2TS.value):
-        if datetime.now() < update_psd.deadline_PS2TS:
-            update_psd.is_active_PS2TS = True
-            status = True
->>>>>>> modify populate_data, add PSD data url, modify admin redirect
         else:
             update_psd.is_active_PS2TS = False
             status = False
