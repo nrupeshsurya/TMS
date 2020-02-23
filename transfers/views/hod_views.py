@@ -8,9 +8,9 @@ from transfers.utils import update_application
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from transfers.decorators import ad_required
+from transfers.decorators import hod_required
 
-@method_decorator([login_required, ad_required], name='dispatch')
+@method_decorator([login_required, hod_required], name='dispatch')
 class HODHomeView(generic.TemplateView):
     template_name = 'transfers/common.html'
 
@@ -21,7 +21,7 @@ class HODHomeView(generic.TemplateView):
         return render(request, self.template_name)
 
 @login_required
-@ad_required
+@hod_required
 def get_hod_data(request):
     response = {}
     try:
