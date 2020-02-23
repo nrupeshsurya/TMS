@@ -18,3 +18,9 @@ class CampusType(enum.Enum):
 	GOA = 0
 	HYD = 1
 	PILANI = 2
+
+
+class ApplicationsStatus(enum.Enum):
+    PENDING = 0
+    APPROVED = 1
+    REJECTED = 2

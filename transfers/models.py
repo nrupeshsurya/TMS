@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .constants import CampusType, TransferType, UserType
+from .constants import CampusType, TransferType, UserType, ApplicationsStatus
 
 
 class UserProfile(models.Model):
@@ -84,8 +84,8 @@ class PS2TSTransfer(models.Model):
         help_text='Name of BITS Campus or Organization where thesis will be carried')
     expected_deliverables = models.TextField(help_text='Expected outcome of thesis')
     # fields to note the status of the application
-    is_supervisor_approved = models.BooleanField(default=False)
-    is_hod_approved = models.BooleanField(default=False)
+    is_supervisor_approved = models.IntegerField(default=ApplicationsStatus.PENDING.value)
+    is_hod_approved = models.IntegerField(default=ApplicationsStatus.PENDING.value)
 
     class Meta:
         verbose_name = 'PS to TS Application'
@@ -117,7 +117,7 @@ class TS2PSTransfer(models.Model):
     name_of_org = models.CharField(max_length=100,
             help_text='Name of BITS Campus or Organization where thesis was being carried')
     # field to note the status of the application
-    is_hod_approved = models.BooleanField(default=False)
+    is_hod_approved = models.IntegerField(default=ApplicationsStatus.PENDING.value)
 
     class Meta:
         verbose_name = 'TS to PS Application'

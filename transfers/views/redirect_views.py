@@ -41,12 +41,15 @@ def approve_transfer_request_redirect_view(request):
         return redirect('/TMS/login/')
     else:
         student_username = request.GET.get('student_username')
+        applications_status = request.GET.get('status')
         if request.user.is_superuser:
             return redirect('/TMS-admin/')
         user_type = request.user.userprofile.user_type
         if user_type == UserType.HOD.value:
-            return redirect('/TMS/hod/approve-transfer-request?student_username='+student_username)
+            url = '/TMS/hod/approve-transfer-request?student_username='+student_username+'&status='+applications_status
+            return redirect(url)
         elif user_type == UserType.SUPERVISOR.value:
-            return redirect('/TMS/supervisor/approve-transfer-request?student_username='+student_username)
+            url = '/TMS/supervisor/approve-transfer-request?student_username='+student_username+'&status='+applications_status
+            return redirect(url)
         else:
             return redirect('/TMS/login-redirect/')

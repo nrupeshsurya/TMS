@@ -90,7 +90,8 @@
                   </table>
               </div>
               <div class="text-center d-flex justify-content-around align-items-center">
-                  <button @click="approveRequest(student)" class="btn btn-sm  btn-outline-success text-dark text-center mb-2">Approve Request</button>
+                  <button @click="submitRequest(student,1)" class="btn btn-sm  btn-outline-success text-dark text-center mb-2">Approve Request</button>
+                  <button @click="submitRequest(student,0)" class=" ml-2 btn btn-sm  btn-outline-danger text-dark text-center mb-2">Reject Request</button>
   
               </div>
           
@@ -101,7 +102,7 @@
 
         <!-- Approved Requests-->
           
-        <div v-if="showApproved" v-for="student in data_approved" id="pending-card" class="table-success container-fluid rounded m-2 col-md-3">
+        <div v-if="showApproved" v-for="student in data_approved" id="pending-card"  class=" container-fluid rounded m-2 col-md-3">
             
           <div @click="modal_student=student, modal_student_attr=student_approved_attributes" data-toggle="modal" data-target="#applicationDetailsModal" id="student-details" >
               <table  id="student-details-table" class="table mt-2">
@@ -249,18 +250,19 @@
               this.loading=false
             })
          },
-         approveRequest(stud)
-         {
-           console.log(stud);
+         submitRequest(stud,status)
+         {  
+          
+           console.log(stud,status);
            if(confirm('Are you sure to approve '+stud.applicant__user__first_name+'\'s request'))
-           axios.get('/TMS/data/approve-transfer-request?student_username='+stud.applicant__user__username)
+           axios.get('/TMS/data/approve-transfer-request?student_username='+stud.applicant__user__username+'&status='+status)
            .then(response=>
            {
               response = response.data;
               if(response.error)
               alert('Error Approving this request, Contact Adminstrator', response.message);
               else
-              alert('Request approved! ;;',response.message);
+              alert('Request submitted.',response.message);
            })
            .catch(error =>
            {
