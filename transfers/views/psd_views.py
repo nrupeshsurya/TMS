@@ -8,7 +8,11 @@ from transfers.models import DeadlineModel
 from transfers.utils import update_psd_data, get_deadline_status
 from transfers.forms import PSDForm
 
- 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from transfers.decorators import psd_required
+
+@method_decorator([login_required, psd_required], name='dispatch') 
 class PSDview(generic.TemplateView):
     form_class = PSDForm
     initial = {'key': 'value'}
@@ -34,6 +38,8 @@ class PSDview(generic.TemplateView):
         }
         return render(request, self.template_name, self.context)
 
+@login_required
+@psd_required
 def get_PSD_data(request, *args, **kwargs):
     response = {}
     try:
