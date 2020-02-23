@@ -39,5 +39,9 @@ urlpatterns += [
     path('data/assoc-dean/get-transfer-lists/type/<type>/', assoc_dean_views.AssocDeanLisApplicationstView.as_view()),
     # psd urls
     path('data/psd/get-data/', psd_views.get_form_data),
+<<<<<<< HEAD
     path('data/reject-transfer-request/', redirect_views.reject_transfer_request_redirect_view),
 ]
+=======
+]
+>>>>>>> add new working psd-dashboard template, modify get_deadline_status, other minor fixes
