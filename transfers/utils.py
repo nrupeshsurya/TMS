@@ -4,6 +4,10 @@ from django.http import JsonResponse
 from .models import PS2TSTransfer, TS2PSTransfer, DeadlineModel
 from django.utils import timezone as datetime
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from transfers.decorators import psd_required
+
 def get_application_status(userprofile):
     status = None
     alias = None
@@ -121,6 +125,8 @@ def fetch_ts2ps_list():
     ts2ps_list = list(ts2ps_qs)
     return ts2ps_list
 
+@login_required
+@psd_required
 def get_deadline_status(form_type):
     try:
         update_psd = DeadlineModel.objects.all().first()
@@ -152,6 +158,8 @@ def get_deadline_status(form_type):
     update_psd.save()
     return status
 
+@login_required
+@psd_required
 def update_psd_data(form):
     try:
         update_psd = DeadlineModel.objects.all().first()

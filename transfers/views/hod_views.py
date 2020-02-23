@@ -6,7 +6,11 @@ from transfers.constants import UserType, CampusType, ApplicationsStatus
 from transfers.models import PS2TSTransfer, UserProfile
 from transfers.utils import update_application, clean_list
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from transfers.decorators import hod_required
 
+@method_decorator([login_required, hod_required], name='dispatch')
 class HODHomeView(generic.TemplateView):
     template_name = 'transfers/common.html'
 
@@ -16,7 +20,8 @@ class HODHomeView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
-
+@login_required
+@ad_required
 def get_hod_data(request):
     response = {}
     try:
