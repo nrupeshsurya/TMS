@@ -112,6 +112,7 @@
           
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div v-if="showApproved" v-for="student in data_approved" id="pending-card" v-bind:class="{'table-success' :student.status === 'APPROVED', 'table-danger':student.status === 'REJECTED'}" class=" container-fluid rounded m-2 col-md-3">
 =======
         <div v-if="showApproved" v-for="student in data_approved" id="pending-card"  class=" container-fluid rounded m-2 col-md-3">
@@ -119,6 +120,9 @@
 =======
         <div v-if="showApproved" v-for="student in data_approved" id="pending-card" v-bind:class="{'table-success' :student.status === 'Approved', 'table-danger':student.status === 'Rejected'}" class=" container-fluid rounded m-2 col-md-3">
 >>>>>>> Changes prior to first release
+=======
+        <div v-if="showApproved" v-for="student in data_approved" id="pending-card" v-bind:class="{'table-success' :student.status === 'APPROVED', 'table-danger':student.status === 'REJECTED'}" class=" container-fluid rounded m-2 col-md-3">
+>>>>>>> Added method to clean data before sending to common.html
             
               <div @click="modal_student=student, modal_student_attr=student_approved_attributes" data-toggle="modal" data-target="#applicationDetailsModal" id="student-details" >
                   <table  id="student-details-table" class="table mt-2">
