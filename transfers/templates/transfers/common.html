@@ -91,7 +91,11 @@
               </div>
               <div class="text-center d-flex justify-content-around align-items-center">
                   <button @click="submitRequest(student,1)" class="btn btn-sm  btn-outline-success text-dark text-center mb-2">Approve Request</button>
+<<<<<<< HEAD
                   <button @click="submitRequest(student,2)" class=" ml-2 btn btn-sm  btn-outline-danger text-dark text-center mb-2">Reject Request</button>
+=======
+                  <button @click="submitRequest(student,0)" class=" ml-2 btn btn-sm  btn-outline-danger text-dark text-center mb-2">Reject Request</button>
+>>>>>>> Added feature to reject application form
   
               </div>
           
@@ -102,7 +106,11 @@
 
         <!-- Approved Requests-->
           
+<<<<<<< HEAD
         <div v-if="showApproved" v-for="student in data_approved" id="pending-card" v-bind:class="{'table-success' :student.status === 'APPROVED', 'table-danger':student.status === 'REJECTED'}" class=" container-fluid rounded m-2 col-md-3">
+=======
+        <div v-if="showApproved" v-for="student in data_approved" id="pending-card"  class=" container-fluid rounded m-2 col-md-3">
+>>>>>>> Added feature to reject application form
             
               <div @click="modal_student=student, modal_student_attr=student_approved_attributes" data-toggle="modal" data-target="#applicationDetailsModal" id="student-details" >
                   <table  id="student-details-table" class="table mt-2">
@@ -257,6 +265,7 @@
               this.loading=false
             })
          },
+<<<<<<< HEAD
          convertData(data) // Not required
          {
           for(index=0;index<data.length; )
@@ -272,6 +281,8 @@
                 }
                 return data;
          },
+=======
+>>>>>>> Added feature to reject application form
          submitRequest(stud,status)
          {  
           
