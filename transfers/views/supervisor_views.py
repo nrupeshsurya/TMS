@@ -7,7 +7,11 @@ from transfers.constants import UserType, CampusType, ApplicationsStatus
 from transfers.models import PS2TSTransfer, UserProfile
 from transfers.utils import update_application, clean_list
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from transfers.decorators import supervisor_required
 
+@method_decorator([login_required, supervisor_required], name='dispatch')
 class SupervisorHomeView(generic.TemplateView):
     template_name = 'transfers/common.html'
 
@@ -15,6 +19,8 @@ class SupervisorHomeView(generic.TemplateView):
         return render(request, self.template_name)
 
 
+@login_required
+@supervisor_required
 def get_supervisor_data(request):
     response = {}
     try:

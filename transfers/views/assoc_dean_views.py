@@ -6,10 +6,16 @@ from transfers.constants import TransferType, ApplicationsStatus
 from transfers.models import PS2TSTransfer, TS2PSTransfer
 from transfers.utils import fetch_ps2ts_list, fetch_ts2ps_list, update_application
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from transfers.decorators import ad_required
+
+@method_decorator([login_required, ad_required], name='dispatch')
 class AssocDeanHomeView(generic.TemplateView):
     def get(self, request, *args, **kwargs):        
         return render(request,"transfers/ad_home.html")
 
+@method_decorator([login_required, ad_required], name='dispatch')
 class AssocDeanLisApplicationstView(generic.ListView):
     def get(self, request, *args, **kwargs):
         if 'type' not in kwargs:
