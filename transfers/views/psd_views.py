@@ -43,7 +43,6 @@ class PSDview(generic.TemplateView):
         }
         return render(request, self.template_name, self.context)
 
-<<<<<<< HEAD
 def get_form_data(request, *args, **kwargs):
     template_name = 'transfers/psd_dashboard.html'
     form = PSDForm(request.POST)
@@ -58,10 +57,8 @@ def get_form_data(request, *args, **kwargs):
     }
     return render(request, template_name, context)
 
-=======
 @login_required
 @psd_required
->>>>>>> 61b633be773fe27037d3e0f6a310d245d5254ea3
 def get_PSD_data(request, *args, **kwargs):
     response = {}
     try:
