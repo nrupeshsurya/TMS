@@ -21,7 +21,11 @@ class HODHomeView(generic.TemplateView):
         return render(request, self.template_name)
 
 @login_required
+<<<<<<< HEAD
 @ad_required
+=======
+@hod_required
+>>>>>>> 9a79cd29fa6fb55e81cbfe946d64f9e350908539
 def get_hod_data(request):
     response = {}
     try:
