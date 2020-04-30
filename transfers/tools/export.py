@@ -96,34 +96,33 @@ def makeFile(x,choice):
             global count
             global final
             global flag
-            print(data.is_hod_approved)
-            if data.is_hod_approved==1:
-                print(data.is_hod_approved)
-                temp={}
-                if choice==0:
-                    Name=data.applicant.user.first_name
-                    ID=data.applicant.user.username
-                    Campus=data.applicant.get_campus_display()
-                    Contact=data.applicant.contact
-                    hodEmail=data.hod_email
-                    supApproved="NA"
-                    supEmail="NA"
-                    supName="NA"
-                    supApproved="NA"
-                    if flag:
-                        supEmail=data.supervisor_email
-                        sup=User.objects.filter(email= supEmail)[0]
-                        supName=sup.first_name + " " + sup.last_name
-                        supApproved=data.get_is_supervisor_approved_display()
-                    hod=User.objects.filter(email=hodEmail)[0]
-                    hodName=hod.first_name+" "+hod.last_name
-                    hodApproved=data.get_is_hod_approved_display()
-                    adApproved=data.get_is_ad_approved_display()
-                    #for psd folks
-                    temp={'Sr.No':count , 'ID':ID,'Name':Name,'Campus':Campus,'Contact':Contact,'Supervisor Name':supName,'Supervisor Email':supEmail,'HoD Name':hodName, 'HoD Email':hodEmail, 'Application Type':data.get_sub_type_display(),'Supervisor Approval':supApproved, 'HoD Approval':hodApproved, 'AD Approval':adApproved}
-                elif choice==2:
+            temp={}
+            if choice==0:
+                Name=data.applicant.user.first_name
+                ID=data.applicant.user.username
+                Campus=data.applicant.get_campus_display()
+                Contact=data.applicant.contact
+                hodEmail=data.hod_email
+                supApproved="NA"
+                supEmail="NA"
+                supName="NA"
+                supApproved="NA"
+                if flag:
+                    supEmail=data.supervisor_email
+                    sup=User.objects.filter(email= supEmail)[0]
+                    supName=sup.first_name + " " + sup.last_name
+                    supApproved=data.get_is_supervisor_approved_display()
+                hod=User.objects.filter(email=hodEmail)[0]
+                hodName=hod.first_name+" "+hod.last_name
+                hodApproved=data.get_is_hod_approved_display()
+                adApproved=data.get_is_ad_approved_display()
+                #for psd folks
+                temp={'Sr.No':count , 'ID':ID,'Name':Name,'Campus':Campus,'Contact':Contact,'Supervisor Name':supName,'Supervisor Email':supEmail,'HoD Name':hodName, 'HoD Email':hodEmail, 'Application Type':data.get_sub_type_display(),'Supervisor Approval':supApproved, 'HoD Approval':hodApproved, 'AD Approval':adApproved}
+            elif choice==2:
+                if data.is_hod_approved==1:
                     temp={'Sr.No':count, 'Name':data.applicant.user.first_name+' '+ data.applicant.user.last_name, 'Transfer Type':data.get_sub_type_display(), 'CGPA':str(data.cgpa),'Reason for Transfer':data.reason_for_transfer,'Organization Name':data.name_of_org  } #for hod: tsps
-                else:
+            else:
+                if data.is_hod_approved==1:
                     temp={'Sr.No':count, 'Name':data.applicant.user.first_name+' '+ data.applicant.user.last_name, 'Transfer Type':data.get_sub_type_display(), 'CGPA':str(data.cgpa),'Thesis Locale':data.get_thesis_locale_display(), 'Thesis Subject': data.thesis_subject,'Organization Name': data.name_of_org, 'Expected Outcome': data.expected_deliverables }
-                final=final.append(temp,ignore_index=True) #for hod: psts
-                count=count+1
+            final=final.append(temp,ignore_index=True) #for hod: psts
+            count=count+1
