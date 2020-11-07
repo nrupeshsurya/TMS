@@ -83,7 +83,9 @@ def get_branch_from_branch_code(branch_code):
         'C5': 'M.Sc. Engineering Technology + ',
         'C6': 'M.Sc. Information Systems + ',
         'C7': 'M.Sc. Finance + ',
+        'D2': 'Humanities and Social Sciences',
         'PS': '',
+        'TS': '',
     }
     return switcher.get(branch_code, "Invalid branch code")
 def notify_ps2ts(data, receiver):

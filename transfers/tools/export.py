@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import pandas as pd
 import re
+import datetime
 from io import BytesIO as IO
 import xlsxwriter 
 count=1
@@ -20,7 +21,7 @@ def getFile(request, choice):
     'xx11':psts.objects.filter(sub_type=1)}
     global count
     global final   
-    global flag
+    global flag #used only for choice 1 and 3 (see below) because their models need supervisor info
     final=pd.DataFrame(columns=['Sr.No', 'ID','Name','Campus','Contact','Supervisor Name','Supervisor Email','HoD Name', 'HoD Email', 'Application Type','Supervisor Approval', 'HoD Approval', 'AD Approval']) #always mention the column attribute if want to have data in particular order
 
     if choice==1:
@@ -93,36 +94,48 @@ def download(final,filename):
 
 def makeFile(x,choice):
     for data in x:
+            da=datetime.datetime(2020,9,18)
+            db=datetime.datetime.now()
+            thisDate = data.application_date
+            if(not (thisDate<=db and thisDate>=da)):
+                continue
             global count
             global final
             global flag
             temp={}
-            if choice==0:
+            if choice==0: #for psd folks
                 Name=data.applicant.user.first_name
                 ID=data.applicant.user.username
                 Campus=data.applicant.get_campus_display()
                 Contact=data.applicant.contact
                 hodEmail=data.hod_email
+                orgName=data.name_of_org
                 supApproved="NA"
                 supEmail="NA"
                 supName="NA"
                 supApproved="NA"
+                thesisLocale="NA"
+
                 if flag:
                     supEmail=data.supervisor_email
                     sup=User.objects.filter(email= supEmail)[0]
                     supName=sup.first_name + " " + sup.last_name
                     supApproved=data.get_is_supervisor_approved_display()
+                    thesisLocale=data.get_thesis_locale_display()
+
                 hod=User.objects.filter(email=hodEmail)[0]
                 hodName=hod.first_name+" "+hod.last_name
                 hodApproved=data.get_is_hod_approved_display()
                 adApproved=data.get_is_ad_approved_display()
-                #for psd folks
-                temp={'Sr.No':count , 'ID':ID,'Name':Name,'Campus':Campus,'Contact':Contact,'Supervisor Name':supName,'Supervisor Email':supEmail,'HoD Name':hodName, 'HoD Email':hodEmail, 'Application Type':data.get_sub_type_display(),'Supervisor Approval':supApproved, 'HoD Approval':hodApproved, 'AD Approval':adApproved}
-            elif choice==2:
+                temp={'Sr.No':count , 'ID':ID,'Name':Name,'Campus':Campus,'Contact':Contact,'Supervisor Name':supName,'Supervisor Email':supEmail,'HoD Name':hodName, 'HoD Email':hodEmail, 'Application Type':data.get_sub_type_display(),'Supervisor Approval':supApproved, 'HoD Approval':hodApproved, 'AD Approval':adApproved, 'Thesis Locale':thesisLocale,'Organization Name': orgName}
+
+            elif choice==2: #ts-ps for hod
                 if data.is_hod_approved==1:
                     temp={'Sr.No':count, 'Name':data.applicant.user.first_name+' '+ data.applicant.user.last_name, 'Transfer Type':data.get_sub_type_display(), 'CGPA':str(data.cgpa),'Reason for Transfer':data.reason_for_transfer,'Organization Name':data.name_of_org  } #for hod: tsps
-            else:
+            else: #ps-ts for hod
                 if data.is_hod_approved==1:
                     temp={'Sr.No':count, 'Name':data.applicant.user.first_name+' '+ data.applicant.user.last_name, 'Transfer Type':data.get_sub_type_display(), 'CGPA':str(data.cgpa),'Thesis Locale':data.get_thesis_locale_display(), 'Thesis Subject': data.thesis_subject,'Organization Name': data.name_of_org, 'Expected Outcome': data.expected_deliverables }
-            final=final.append(temp,ignore_index=True) #for hod: psts
+            final=final.append(temp,ignore_index=True) 
+            if not flag:
+                final=final.drop(columns=['Supervisor Name', 'Supervisor Email', 'Supervisor Approval','Thesis Locale'])
             count=count+1

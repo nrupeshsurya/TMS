@@ -26,14 +26,14 @@ class Command(BaseCommand):
                 print(hod_email, end= " ")
                 try:
                     user_obj, created = User.objects.get_or_create(
-                        username=column[-1], # Hyd campus
+                        username=hod_email,
                         password=temp_password,
                         email=hod_email,
                     )
                     if created:
                         # some formatting issue in the csv
                         # please remove this if csv if fine
-                        first_name = column[1]
+                        first_name = column[2]
                         user_obj.first_name = first_name
                         user_obj.save()
                         user_obj.userprofile.user_type = UserType.HOD.value

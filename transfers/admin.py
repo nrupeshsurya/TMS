@@ -22,11 +22,11 @@ class CustomUserAdmin(UserAdmin):
 		return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
 class PS2TSTransferadmin(ImportExportModelAdmin):
-    	list_display = ('applicant','supervisor_email','hod_email',)
+    	list_display = ('applicant','supervisor_email','hod_email','application_date')
     	search_fields = ('applicant__user__username','supervisor_email','hod_email',)
 
 class TS2PSTransferadmin(ImportExportModelAdmin):
-    	list_display = ('applicant','hod_email',)
+    	list_display = ('applicant','hod_email','application_date')
     	search_fields = ('applicant__user__username','hod_email',)
 	
 
